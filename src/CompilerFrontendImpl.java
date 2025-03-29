@@ -76,7 +76,7 @@ public class CompilerFrontendImpl extends CompilerFrontend {
         a_rparen.addTransition(0, ')', 1);
         lexer.add_automaton(TokenType.RPAREN, a_rparen);
 
-        // Automaton for WHITE_SPACE
+        // Automaton for WHITE_SPACE (ignored)
         Automaton a_ws = new AutomatonImpl();
         a_ws.addState(0, true, false);
         a_ws.addState(1, false, true);
