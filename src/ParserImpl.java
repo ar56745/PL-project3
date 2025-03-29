@@ -38,11 +38,7 @@ public class ParserImpl extends Parser {
                 return new MinusExpr(left, right);
             }
         } 
-        else 
-        
-        {
-            return left;
-        }
+        else return left;
     }
 
     private Expr parseF() throws Exception {
