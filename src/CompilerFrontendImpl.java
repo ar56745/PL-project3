@@ -1,4 +1,5 @@
 public class CompilerFrontendImpl extends CompilerFrontend {
+    private Lexer lexer;
     public CompilerFrontendImpl() {
         super();
     }
@@ -30,7 +31,7 @@ public class CompilerFrontendImpl extends CompilerFrontend {
     protected void init_lexer() {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'init_lexer'");
-        Lexer lexer = new LexerImpl();
+         
 
         Automaton a_num = new AutomatonImpl();
         int state = 0;
@@ -55,6 +56,7 @@ public class CompilerFrontendImpl extends CompilerFrontend {
 
         a_num.addState(2, false, true);
 
+        lexer = new LexerImpl();
         lexer.add_automaton(TokenType.NUM, a_num);
         lexer.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
         lexer.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
