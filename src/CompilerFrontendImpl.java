@@ -24,6 +24,7 @@ public class CompilerFrontendImpl extends CompilerFrontend {
         //throw new UnsupportedOperationException("Unimplemented method 'init_lexer'");
         Lexer lexer = new LexerImpl();
 
+        // Automaton for NUM
         Automaton a_num = new AutomatonImpl();
         a_num.addState(0, true, false);
         a_num.addState(1, false, true);
@@ -33,42 +34,49 @@ public class CompilerFrontendImpl extends CompilerFrontend {
         }
         lexer.add_automaton(TokenType.NUM, a_num);
 
+        // Automaton for PLUS
         Automaton a_plus = new AutomatonImpl();
         a_plus.addState(0, true, false);
         a_plus.addState(1, false, true);
         a_plus.addTransition(0, '+', 1);
         lexer.add_automaton(TokenType.PLUS, a_plus);
 
+        // Automaton for MINUS
         Automaton a_minus = new AutomatonImpl();
         a_minus.addState(0, true, false);
         a_minus.addState(1, false, true);
         a_minus.addTransition(0, '-', 1);
         lexer.add_automaton(TokenType.MINUS, a_minus);
 
+        // Automaton for TIMES
         Automaton a_times = new AutomatonImpl();
         a_times.addState(0, true, false);
         a_times.addState(1, false, true);
         a_times.addTransition(0, '*', 1);
         lexer.add_automaton(TokenType.TIMES, a_times);
 
+        // Automaton for DIV
         Automaton a_div = new AutomatonImpl();
         a_div.addState(0, true, false);
         a_div.addState(1, false, true);
         a_div.addTransition(0, '/', 1);
         lexer.add_automaton(TokenType.DIV, a_div);
 
+        // Automaton for LPAREN
         Automaton a_lparen = new AutomatonImpl();
         a_lparen.addState(0, true, false);
         a_lparen.addState(1, false, true);
         a_lparen.addTransition(0, '(', 1);
         lexer.add_automaton(TokenType.LPAREN, a_lparen);
 
+        // Automaton for RPAREN
         Automaton a_rparen = new AutomatonImpl();
         a_rparen.addState(0, true, false);
         a_rparen.addState(1, false, true);
         a_rparen.addTransition(0, ')', 1);
         lexer.add_automaton(TokenType.RPAREN, a_rparen);
 
+        // Automaton for WHITE_SPACE
         Automaton a_ws = new AutomatonImpl();
         a_ws.addState(0, true, false);
         a_ws.addState(1, false, true);
@@ -84,6 +92,4 @@ public class CompilerFrontendImpl extends CompilerFrontend {
 
         this.lex = lexer;
     }
-    }
-
-
+}
