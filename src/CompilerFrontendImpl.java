@@ -1,5 +1,5 @@
 public class CompilerFrontendImpl extends CompilerFrontend {
-    private Lexer lexer;
+    //private Lexer lexer;
     public CompilerFrontendImpl() {
         super();
     }
@@ -56,21 +56,21 @@ public class CompilerFrontendImpl extends CompilerFrontend {
 
         a_num.addState(2, false, true);
 
-        lexer = new LexerImpl();
-        lexer.add_automaton(TokenType.NUM, a_num);
-        lexer.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
-        lexer.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
-        lexer.add_automaton(TokenType.TIMES, singlecharAutomaton('*'));
-        lexer.add_automaton(TokenType.DIV, singlecharAutomaton('/'));
-        lexer.add_automaton(TokenType.LPAREN, singlecharAutomaton('('));
-        lexer.add_automaton(TokenType.RPAREN, singlecharAutomaton(')'));
+        lex = new LexerImpl();
+        lex.add_automaton(TokenType.NUM, a_num);
+        lex.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
+        lex.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
+        lex.add_automaton(TokenType.TIMES, singlecharAutomaton('*'));
+        lex.add_automaton(TokenType.DIV, singlecharAutomaton('/'));
+        lex.add_automaton(TokenType.LPAREN, singlecharAutomaton('('));
+        lex.add_automaton(TokenType.RPAREN, singlecharAutomaton(')'));
 
-        Automaton ws = new AutomatonImpl();
-        ws.addState(0, true, true); 
-        ws.addTransition(0, ' ', 0);
-        ws.addTransition(0, '\n', 0);
-        ws.addTransition(0, '\r', 0);
-        ws.addTransition(0, '\t', 0);
-        lexer.add_automaton(TokenType.WHITE_SPACE, ws);
+        Automaton var = new AutomatonImpl();
+        var.addState(0, true, true); 
+        var.addTransition(0, ' ', 0);
+        var.addTransition(0, '\n', 0);
+        var.addTransition(0, '\r', 0);
+        var.addTransition(0, '\t', 0);
+        lex.add_automaton(TokenType.WHITE_SPACE, var);
 }
 }

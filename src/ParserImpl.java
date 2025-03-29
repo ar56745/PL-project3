@@ -21,7 +21,7 @@ public class ParserImpl extends Parser {
         //throw new UnsupportedOperationException("Unimplemented method 'do_parse'");
         Expr ans = parseT();
         if (tokens != null) {
-            throw new Exception("Unexpected token at end: " + tokens.elem.lexeme);
+            throw new Exception("Unexpected token" + tokens.elem.lexeme);
         }
         return ans;
     }
@@ -53,10 +53,7 @@ public class ParserImpl extends Parser {
                 return new DivExpr(left, right);
             }
         } 
-        else 
-        {
-            return left;
-        }
+        else return left;
     }
 
     private Expr parseLit() throws Exception {
@@ -69,7 +66,7 @@ public class ParserImpl extends Parser {
             consume(TokenType.RPAREN);
             return inside;
         } else {
-            throw new Exception("Expected literal or parenthesized expression");
+            throw new Exception("No literal or parenthesis");
         }
     }
 
