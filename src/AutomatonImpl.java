@@ -52,7 +52,7 @@ public class AutomatonImpl implements Automaton {
     @Override
     public void reset(){
         // TODO Auto-generated method stub
-        current_states.clear(); current_states.addAll(start_states);
+        current_states = new HashSet<>(start_states);
         //throw new UnsupportedOperationException("Unimplemented method 'reset'");
     }
 

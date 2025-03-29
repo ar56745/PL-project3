@@ -3,6 +3,7 @@ public class CompilerFrontendImpl extends CompilerFrontend {
         super();
     }
 
+    
     public CompilerFrontendImpl(boolean debug_) {
         super(debug_);
     }
@@ -18,78 +19,56 @@ public class CompilerFrontendImpl extends CompilerFrontend {
      * DIV: /
      * WHITE_SPACE (' '|\n|\r|\t)*
      */
+     private Automaton singlecharAutomaton(char c) {
+        Automaton a = new AutomatonImpl();
+        a.addState(0, true, false);
+        a.addState(1, false, true);
+        a.addTransition(0, c, 1);
+        return a;
+    }
     @Override
     protected void init_lexer() {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'init_lexer'");
         Lexer lexer = new LexerImpl();
 
-        // Automaton for NUM
         Automaton a_num = new AutomatonImpl();
-        a_num.addState(0, true, false);
-        a_num.addState(1, false, true);
-        for (char i = '0'; i <= '9'; i++) {
-            a_num.addTransition(0, i, 1);
-            a_num.addTransition(1, i, 1);
+        int state = 0;
+        a_num.addState(state, true, false);        
+        for (int i = 1; i <= 10; i++) {
+            a_num.addState(i, false, false);      
         }
-        lexer.add_automaton(TokenType.NUM, a_num);
+        a_num.addState(11, false, true);           
 
-        // Automaton for PLUS
-        Automaton a_plus = new AutomatonImpl();
-        a_plus.addState(0, true, false);
-        a_plus.addState(1, false, true);
-        a_plus.addTransition(0, '+', 1);
-        lexer.add_automaton(TokenType.PLUS, a_plus);
+        for (char d = '0'; d <= '9'; d++) {
+            a_num.addTransition(0, d, 0);
+        }
 
-        // Automaton for MINUS
-        Automaton a_minus = new AutomatonImpl();
-        a_minus.addState(0, true, false);
-        a_minus.addState(1, false, true);
-        a_minus.addTransition(0, '-', 1);
-        lexer.add_automaton(TokenType.MINUS, a_minus);
+        // dot
+       a_num.addTransition(0, '.', 1);
 
-        // Automaton for TIMES
-        Automaton a_times = new AutomatonImpl();
-        a_times.addState(0, true, false);
-        a_times.addState(1, false, true);
-        a_times.addTransition(0, '*', 1);
-        lexer.add_automaton(TokenType.TIMES, a_times);
+        // [0-9]+ after dot
+        for (char d = '0'; d <= '9'; d++) {
+            a_num.addTransition(1, d, 2);  
+            a_num.addTransition(2, d, 2);  
+        }
 
-        // Automaton for DIV
-        Automaton a_div = new AutomatonImpl();
-        a_div.addState(0, true, false);
-        a_div.addState(1, false, true);
-        a_div.addTransition(0, '/', 1);
-        lexer.add_automaton(TokenType.DIV, a_div);
+        a_num.addState(2, false, true);
 
-        // Automaton for LPAREN
-        Automaton a_lparen = new AutomatonImpl();
-        a_lparen.addState(0, true, false);
-        a_lparen.addState(1, false, true);
-        a_lparen.addTransition(0, '(', 1);
-        lexer.add_automaton(TokenType.LPAREN, a_lparen);
+        lex.add_automaton(TokenType.NUM, a_num);
+        lex.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
+        lex.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
+        lex.add_automaton(TokenType.TIMES, singlecharAutomaton('*'));
+        lex.add_automaton(TokenType.DIV, singlecharAutomaton('/'));
+        lex.add_automaton(TokenType.LPAREN, singlecharAutomaton('('));
+        lex.add_automaton(TokenType.RPAREN, singlecharAutomaton(')'));
 
-        // Automaton for RPAREN
-        Automaton a_rparen = new AutomatonImpl();
-        a_rparen.addState(0, true, false);
-        a_rparen.addState(1, false, true);
-        a_rparen.addTransition(0, ')', 1);
-        lexer.add_automaton(TokenType.RPAREN, a_rparen);
-
-        // Automaton for WHITE_SPACE (ignored)
-        Automaton a_ws = new AutomatonImpl();
-        a_ws.addState(0, true, false);
-        a_ws.addState(1, false, true);
-        a_ws.addTransition(0, ' ', 1);
-        a_ws.addTransition(1, ' ', 1);
-        a_ws.addTransition(0, '\n', 1);
-        a_ws.addTransition(1, '\n', 1);
-        a_ws.addTransition(0, '\r', 1);
-        a_ws.addTransition(1, '\r', 1);
-        a_ws.addTransition(0, '\t', 1);
-        a_ws.addTransition(1, '\t', 1);
-        lexer.add_automaton(TokenType.WHITE_SPACE, a_ws);
-
-        this.lex = lexer;
-    }
+        Automaton ws = new AutomatonImpl();
+        ws.addState(0, true, true); 
+        ws.addTransition(0, ' ', 0);
+        ws.addTransition(0, '\n', 0);
+        ws.addTransition(0, '\r', 0);
+        ws.addTransition(0, '\t', 0);
+        lex.add_automaton(TokenType.WHITE_SPACE, ws);
+}
 }
