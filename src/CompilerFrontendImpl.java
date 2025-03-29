@@ -55,13 +55,13 @@ public class CompilerFrontendImpl extends CompilerFrontend {
 
         a_num.addState(2, false, true);
 
-        lex.add_automaton(TokenType.NUM, a_num);
-        lex.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
-        lex.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
-        lex.add_automaton(TokenType.TIMES, singlecharAutomaton('*'));
-        lex.add_automaton(TokenType.DIV, singlecharAutomaton('/'));
-        lex.add_automaton(TokenType.LPAREN, singlecharAutomaton('('));
-        lex.add_automaton(TokenType.RPAREN, singlecharAutomaton(')'));
+        lexer.add_automaton(TokenType.NUM, a_num);
+        lexer.add_automaton(TokenType.PLUS, singlecharAutomaton('+'));
+        lexer.add_automaton(TokenType.MINUS, singlecharAutomaton('-'));
+        lexer.add_automaton(TokenType.TIMES, singlecharAutomaton('*'));
+        lexer.add_automaton(TokenType.DIV, singlecharAutomaton('/'));
+        lexer.add_automaton(TokenType.LPAREN, singlecharAutomaton('('));
+        lexer.add_automaton(TokenType.RPAREN, singlecharAutomaton(')'));
 
         Automaton ws = new AutomatonImpl();
         ws.addState(0, true, true); 
@@ -69,6 +69,6 @@ public class CompilerFrontendImpl extends CompilerFrontend {
         ws.addTransition(0, '\n', 0);
         ws.addTransition(0, '\r', 0);
         ws.addTransition(0, '\t', 0);
-        lex.add_automaton(TokenType.WHITE_SPACE, ws);
+        lexer.add_automaton(TokenType.WHITE_SPACE, ws);
 }
 }
